@@ -3,22 +3,23 @@ import collections
 
 DICE_SIDES = 6;
 
-
-def main():
-    pretty_print_frequencies(simulation(3, 10000, 0))
+def do_experiment(dice_count, test_count, printing_level):
+    print("Number of dices: ", dice_count)
+    print("Number of tests: ", test_count)
+    pretty_print_frequencies(simulation(dice_count, test_count, printing_level))
 
 def pretty_print_frequencies(frequencies):
     total_frequencies = sum(frequencies.values())
     hightest_iteration_count = list(frequencies.keys())[-1]
     for i in range(hightest_iteration_count):
         frequency = frequencies[i] if i in frequencies.keys() else 0
-        hashtag_count = int((float(frequency)/total_frequencies) * 200)
+        hashtag_count = int((float(frequency)/total_frequencies) * 400)
         
         print("{}\t|{}".format(i, "#" * hashtag_count))
 
-def simulation(dice_count, number_of_tries, printing_level):
+def simulation(dice_count, test_count, printing_level):
     iteration_counts = []
-    for _ in range(number_of_tries):
+    for _ in range(test_count):
         iteration_counts.append(test(dice_count, printing_level))
     frequencies = dict(collections.Counter(iteration_counts))
     sorted_frequencies = collections.OrderedDict(sorted(frequencies.items()))
@@ -53,4 +54,5 @@ def genetic_drift(alleles, dice_count, printing_level):
             print(dice_throw + 1, end=", ")
     return result
 
-main()
+do_experiment(1, 100000, 0)
+do_experiment(2, 100000, 0)
